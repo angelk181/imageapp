@@ -1,0 +1,92 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+    id 'androidx.navigation.safeargs'
+}
+
+def secretPropertiesFile = rootProject.file("secret.properties")
+def secretProperties = new Properties()
+secretProperties.load(new FileInputStream(secretPropertiesFile))
+
+android {
+    compileSdkVersion 33
+
+    defaultConfig {
+        applicationId "com.example.imageapplication"
+        minSdkVersion 26
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        buildConfigField("String", "unsplash_api_key", secretProperties['unsplash_api_key'])
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+    namespace 'com.example.imageapplication'
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+
+
+    def retrofit_version = "2.9.0"
+    def hilt_version = "2.44"
+    def lifecycle_version = "2.6.0-alpha02"
+
+    // Default
+    implementation "androidx.appcompat:appcompat:1.5.1"
+    implementation "com.google.android.material:material:1.6.1"
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    //Ktx
+    implementation "androidx.fragment:fragment-ktx:1.5.3"
+    implementation "androidx.core:core-ktx:1.9.0"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //Dagger-Hilt
+    implementation"com.google.dagger:hilt-android:$hilt_version"
+    kapt"com.google.dagger:hilt-android-compiler:$hilt_version"
+
+
+    //ViewModel
+    implementation"androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation"androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+    // LiveData
+    implementation"androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+
+    //Coil
+    implementation"io.coil-kt:coil:2.2.1"
+
+    //Facebook Shimmer
+    implementation "com.facebook.shimmer:shimmer:0.5.0"
+
+}

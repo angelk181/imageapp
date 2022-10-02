@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ImageFragment">
+
+    <fragment
+        android:id="@+id/ImageFragment"
+        android:label="Images"
+        android:name="com.example.imageapplication.ImageFragment"
+        tools:layout="@layout/image_fragment">
+        <action
+            android:id="@+id/action_ImageFragment_to_ImageDetailFragment"
+            app:destination="@id/ImageDetailFragment"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/ImageDetailFragment"
+        android:label="Image Details"
+        android:name="com.example.imageapplication.ImageDetailFragment"
+        tools:layout="@layout/fragment_image_detail">
+        <argument
+            app:argType="integer"
+            android:name="likes"
+            />
+        <argument
+            app:argType="string"
+            android:name="image"
+            />
+
+    </fragment>
+</navigation>
