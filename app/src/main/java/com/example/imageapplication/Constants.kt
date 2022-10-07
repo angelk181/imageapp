@@ -1,9 +1,7 @@
 package com.example.imageapplication
 
-class Constants {
-    companion object {
+object Constants {
         const val baseUrl = "https://api.unsplash.com/"
         const val searchExample = "coffee"
 
-    }
 }
