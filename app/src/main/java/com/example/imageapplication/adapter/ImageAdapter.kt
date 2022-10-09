@@ -1,16 +1,13 @@
 package com.example.imageapplication.adapter
-
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.imageapplication.Constants
+import com.example.imageapplication.common.Constants
 import com.example.imageapplication.ImageFragmentDirections
 import com.example.imageapplication.databinding.ImageItemBinding
-import com.example.imageapplication.model.search.Results
+import com.example.imageapplication.domain.model.Results
 
 class ImageAdapter(
 ): RecyclerView.Adapter<ImageAdapter.ImageViewHolder> () {

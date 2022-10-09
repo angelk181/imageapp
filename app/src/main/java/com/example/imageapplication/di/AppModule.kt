@@ -1,9 +1,10 @@
 package com.example.imageapplication.di
 
 
-import com.example.imageapplication.Constants.baseUrl
-import com.example.imageapplication.ImageApi
-import com.example.imageapplication.repository.ImageRepository
+import com.example.imageapplication.common.Constants.baseUrl
+import com.example.imageapplication.data.remote.ImageApi
+import com.example.imageapplication.data.remote.repository.ImageRepositoryImpl
+import com.example.imageapplication.domain.repository.ImageRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,16 +21,16 @@ class AppModule {
     @Provides
     fun provideRepository(
         api: ImageApi
-    ) = ImageRepository(api)
+    ): ImageRepository = ImageRepositoryImpl(api)
 
 
-    @Singleton
-    @Provides
-    fun provideRetrofit(): ImageApi =
-        Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(ImageApi::class.java)
+        @Singleton
+        @Provides
+        fun provideRetrofit(): ImageApi =
+            Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(ImageApi::class.java)
+    }
 
-}

@@ -1,4 +1,8 @@
-package com.example.imageapplication.model.search
+package com.example.imageapplication.domain.model
+
+import com.example.imageapplication.data.remote.dto.Links
+import com.example.imageapplication.data.remote.dto.Urls
+import com.example.imageapplication.data.remote.dto.User
 
 data class Results(
     val blur_hash: String,

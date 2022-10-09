@@ -1,4 +1,4 @@
-package com.example.imageapplication.model
+package com.example.imageapplication.data.remote.dto
 
 data class Urls(
     val full: String,

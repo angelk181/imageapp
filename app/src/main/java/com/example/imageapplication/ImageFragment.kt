@@ -6,12 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.example.imageapplication.Util.ViewState
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.imageapplication.adapter.ImageAdapter
 import com.example.imageapplication.databinding.ImageFragmentBinding
-import com.example.imageapplication.viewmodel.ImageViewModel
+import com.example.presentation.viewmodel.ImageViewModel
+import com.example.presentation.SearchedImageState
 
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ImageFragment : Fragment(R.layout.image_fragment) {
@@ -27,32 +31,33 @@ class ImageFragment : Fragment(R.layout.image_fragment) {
         val adapter = ImageAdapter()
         binding.rvImages.adapter = adapter
 
-        viewModel.searchedImages.observe(viewLifecycleOwner){ response ->
-            when(response) {
-                is ViewState.Loading -> {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.searchedImage.collect { state ->
+                    when (state) {
+                        SearchedImageState(isLoading = state.isLoading) -> {
+                            // shimmer will be set here
+                        }
+                        SearchedImageState(results = state.results) -> {
+                            state.results?.let { adapter.setSearchedImageList(it) }
+                        }
+                        SearchedImageState(error = state.error) -> {
 
-                    // shimmer will be set here
-                }
-                is ViewState.Success -> {
-                    response.data?.let { adapter.setSearchedImageList(it.results) }
-
-                }
-                else -> {
-                    // snack bar for errors will be added.
-
+                            // snack bar for errors will be added and handled with a single event variable
+                        }
+                    }
                 }
             }
 
         }
-        }
-
+    }
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ImageFragmentBinding.inflate(inflater,container,false)
+        _binding = ImageFragmentBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }

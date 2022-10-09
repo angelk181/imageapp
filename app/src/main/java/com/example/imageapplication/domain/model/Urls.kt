@@ -1,4 +1,4 @@
-package com.example.imageapplication.model.search
+package com.example.imageapplication.domain.model
 
 data class Urls(
     val full: String,

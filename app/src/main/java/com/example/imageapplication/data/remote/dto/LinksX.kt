@@ -1,4 +1,4 @@
-package com.example.imageapplication.model.search
+package com.example.imageapplication.data.remote.dto
 
 data class LinksX(
     val html: String,
